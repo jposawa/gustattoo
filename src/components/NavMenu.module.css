@@ -1,0 +1,27 @@
+.navMenu {
+  position: relative;
+  width: 100%;
+  height: 3.5rem;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  gap: min(2%, 1rem);
+  background: #369;
+
+  > a {
+    text-decoration: none;
+    color: white;
+
+    &:hover, &.active {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .navMenu {
+    flex-direction: column;
+    width: 3.5rem;
+    height: 100%;
+  }
+}
