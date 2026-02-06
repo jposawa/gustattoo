@@ -1,0 +1,1 @@
+export const DATABASE_CONTEXT = import.meta.env.VITE_DATABASE_CONTEXT;

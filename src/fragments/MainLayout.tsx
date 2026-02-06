@@ -1,11 +1,12 @@
 import React from "react";
 import clsx from "clsx";
-import { themeAtom } from "@/state";
+import { fbAppAtom, themeAtom } from "@/state";
 import { useAtomValue } from "jotai";
 import { NavMenu } from "@/components";
 import { PageRouter } from "@/pages";
 
 import styles from "./MainLayout.module.css";
+import { useFbConfig } from "@/hooks";
 
 type MainLayoutProps = {
 	className?: string;
@@ -17,6 +18,25 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 	style = {},
 }) => {
 	const currentTheme = useAtomValue(themeAtom);
+	const { getConfig } = useFbConfig();
+	const fbApp = useAtomValue(fbAppAtom);
+	const [baseConfig, setBaseConfig] = React.useState<unknown>();
+
+	React.useEffect(() => {
+		if (fbApp?.name) {
+			getConfig()
+				.then((configData) => {
+					setBaseConfig(configData);
+				})
+				.catch((error) => {
+					console.error("Error fetching config data:", error);
+				});
+		}
+	}, [fbApp, getConfig]);
+
+	React.useEffect(() => {
+		console.log("Base config updated:", baseConfig);
+	}, [baseConfig]);
 
 	return (
 		<div
